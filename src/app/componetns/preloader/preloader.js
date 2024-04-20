@@ -77,15 +77,31 @@ export default function Preloader ({}) {
 							ease: "power4.inOut",
 						});
 
-						gsap.to("#home_background_container", {
+						gsap.to("#growing_businesses", {
+							duration: 2,
+							delay: 0,
+							y: '-10vh',
+							ease: "power4.inOut",
+						});
+						// gsap.set("#growing_businesses", { autoAlpha: 1 });
+
+						gsap.to("#home_background", {
 							duration: 2,
 							delay: 0,
 							y: '0px',
 							ease: "power4.inOut",
-							// onComplete: () => {
-							// 	changeImages()
-							// }
+							onComplete: () => {
+								// changeImages()
+							}
 						});
+
+
+						// gsap.to("#growing_businesses", {
+						// 	duration: 2,
+						// 	delay: 0,
+						// 	y: -200,
+						// })
+
 					}
 				});	
       }
@@ -121,7 +137,7 @@ export default function Preloader ({}) {
 
 			<div
 				className={styles.home_background}
-				id="home_background_container"
+				id="home_background"
 				>
 				<Image
 					src={currentImage}

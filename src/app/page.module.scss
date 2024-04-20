@@ -72,22 +72,28 @@ $base-red: #E63E3A;
 	z-index: 4;
 }
 
+.new_container {
+	height: 100vh;
+}
+
 .home_background {
 	transform: translate(0px, 300px);
 	background-color: $base-red;
 
 	img {
-		width: 100%;
-		height: auto;
+		height: 90vh;
+		width: auto;
 		background-size: contain;
-    background-position: top;
-
+    background-position: center;
 		box-shadow: 0 5px 10px -5px rgba(0, 0, 0, 0.787)
 	}
 }
 
 .growing_businesses {
 	background-color: $base-red;
+	height: 100vh;
+	// opacity: 0;
+	// transform: translate(0px, -10vh);
 
 	&__header {
 		padding: 18px;
@@ -152,3 +158,8 @@ $base-red: #E63E3A;
 	}
 }
 
+
+.white {
+	width: 100%;
+	height: 100vh;
+}

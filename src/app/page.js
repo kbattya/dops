@@ -1,54 +1,95 @@
 'use client';
-import React from "react";
-import styles from "./page.module.scss";
-import { gsap } from "gsap";
-import Image from "next/image";
-import image1 from "../images/01header.png"
-  
+import React, { useEffect, useRef } from "react";
+import styles from "./page.module.scss";  
 import { SplitText } from "gsap-trial/SplitText";
 import { ScrollTrigger } from "gsap-trial/ScrollTrigger";
 import Preloader from "./componetns/preloader/preloader";
 
+
+import { gsap } from "gsap";
+import { useGSAP } from "@gsap/react";
+
+gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(SplitText, ScrollTrigger) 
 
 export default function Home() {
-  return (
-    <main className={styles.main}>
-			<Preloader />
+const container = useRef();
 
-			<div className={styles.preloader__logo_full}>
-				<div
-					className={styles.logo_text_horizontal}
-					id="horizontal_text"
-					style={{opacity: '0'}}
-				>
-					Respect
-				</div>
-				<div
-					className={styles.logo_text_vertical_dot}
-					id="logo_text_vertical_dot"
-					style={{opacity: '0'}}
-				>
-					<span>.</span>
-				</div>
-					
-				<div className={styles.logo_text_vertical__wrapper}>
-					<span
-						className={styles.logo_text_vertical__text}
-						id="vertical_text"
+useGSAP(() => {
+	gsap.to("#home_background_container", {
+		y: 0,
+	});	
+
+	// gsap.to("#growing_businesses", {
+	// 	duration: 2,
+	// 	delay: 4,
+	// 	y: '-10vh',
+	// 	ease: "power4.inOut",
+	// });
+
+	// gsap.to("#growing_businesses", {
+	// 	y: '-10vh',
+	// 	scrollTrigger: {
+	// 		trigger: "#growing_businesses",
+	// 	}
+	// });	
+
+	gsap.utils.toArray(["#home_background_container", "#growing_businesses"]).forEach((panel, i) => {
+		ScrollTrigger.create({
+			trigger: panel,
+			// start: "top top",
+			start: i === 0 ? "top top" : "-100 -1000",
+			end: i === 1 ? "bottom bottom" : "",
+			// end: i === 1 ? "-100 -100" : "bottom bottom",
+			// end: "-100 bottom",
+			pin: i === 2 ? false : true, 
+			pinSpacing: false,
+			markers: true,
+		});
+	});
+}, { scope: container,  revertOnUpdate: true}); 
+
+  return (
+    <main className={styles.main} ref={container}>
+
+			<div id="home_background_container" className={styles.new_container}>
+				<Preloader />
+				<div className={styles.preloader__logo_full}>
+					<div
+						className={styles.logo_text_horizontal}
+						id="horizontal_text"
 						style={{opacity: '0'}}
 					>
-						Studio
-					</span>
+						Respect
+					</div>
+					<div
+						className={styles.logo_text_vertical_dot}
+						id="logo_text_vertical_dot"
+						style={{opacity: '0'}}
+					>
+						<span>.</span>
+					</div>
+						
+					<div className={styles.logo_text_vertical__wrapper}>
+						<span
+							className={styles.logo_text_vertical__text}
+							id="vertical_text"
+							style={{opacity: '0'}}
+						>
+							Studio
+						</span>
+					</div>
 				</div>
+
+				<div className={styles.info_text}>
+					Digital Marketing <br />Agency
+				</div>
+
 			</div>
-
-			<div className={styles.info_text}>
-				Digital Marketing <br />Agency
-			</div>
+			
 
 
-			<div className={styles.growing_businesses}>
+			<div className={styles.growing_businesses} id="growing_businesses">
 				<div
 					className={styles.growing_businesses__header}
 				>
@@ -69,17 +110,17 @@ export default function Home() {
 					<div>
 						<a>We're hiring</a>
 						<a>Contacts</a>
-
 						<button>
 							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="13" viewBox="0 0 22 13" fill="none">
 							<path d="M21.1007 6.49956L15.3873 0.786133H12.5306L17.2399 5.49546L0.899353 5.48769L0.900767 7.51284L17.2498 7.51355L12.5306 12.213L15.3866 12.2137L21.1007 6.49956Z" fill="#E63E3A"/>
 							</svg>
+
 							<span>Book a call</span>
 						</button>
 					</div>
 				</div>
 
-				<div className={styles.growing_businesses__content}>
+				<div className={styles.growing_businesses__content} id="growing_businesses__content">
 					<div className={styles.growing_businesses__content__text_1}>
 						Growing <br /> businesses by <br /> building <br /> relationships
 					</div>
@@ -88,9 +129,19 @@ export default function Home() {
 						Generation agency
 					</div>
 
+					</div>
+			</div>
+
+			<div className={styles.white} id="third">
+			</div>
+			{/* <div id="panel">
+			
+
+				<div className={styles.white}>
 				</div>
 
-			</div>
+			</div> */}
+			
 
 			
     </main>
