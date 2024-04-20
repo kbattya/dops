@@ -1,11 +1,26 @@
 'use-client'
-import React, {useEffect} from "react";
+import React, { useEffect, useState, useRef } from "react";
 import styles from "../../page.module.scss";
 import { gsap } from "gsap";
+import Image from "next/image";
+
+import image1 from "../../../images/01header.png"
+import image2 from '../../../images/02header.jpg'
+import image3 from '../../../images/03header.png';
+import image4 from '../../../images/04header.jpg';
 
 import { SplitText } from "gsap-trial/SplitText";
 
 export default function Preloader ({}) {
+	var images = [
+		image1,
+		image2,
+		image3,
+		image4
+	];
+	const [currentImage, setCurrentImage] = useState(images[0]);
+	const indexRef = useRef(0);
+	
 	useEffect(() => {
 		var tl = gsap.timeline();
 		tl.to("#preloader__counter", {
@@ -46,6 +61,7 @@ export default function Preloader ({}) {
         });
 
 				var split2 = new SplitText("#vertical_text", {type: "chars"});
+
 				gsap.from(split2.chars, {
 					duration: 0.1,
 					delay: 0,
@@ -53,50 +69,65 @@ export default function Preloader ({}) {
 					x: 0,
 					autoAlpha: 0, 
 					ease: "power4.inOut",
-					stagger: 0.22
+					stagger: 0.22,
+					onComplete: () => {
+						gsap.to("#preloader_background_container", {
+							duration: 2,
+							y: '-100%',
+							ease: "power4.inOut",
+						});
+
+						gsap.to("#home_background_container", {
+							duration: 2,
+							delay: 0,
+							y: '0px',
+							ease: "power4.inOut",
+							// onComplete: () => {
+							// 	changeImages()
+							// }
+						});
+					}
 				});	
       }
     });
 	}, [])
 
+// 	function changeImages() {
+//     const intervalId = setInterval(() => {
+// 			const nextIndex = (indexRef.current + 1) % images.length;
+// 			indexRef.current = nextIndex;
+// 			setCurrentImage(images[nextIndex]); 
+//     }, 1000);  
+
+//     return intervalId;
+// }
+
 	return (
-		<div className={styles.preloader}>
-			<div className={styles.preloader__logo_full}>
+		<>
+			<div className={styles.preloader} id="page_preloader">
 				<div
-					className={styles.logo_text_horizontal}
-					id="horizontal_text"
-					style={{opacity: '0'}}
+					className={styles.preloader__counter}
+					id="preloader__counter"
 				>
-					Respect
 				</div>
+
 				<div
-					className={styles.logo_text_vertical_dot}
-					id="logo_text_vertical_dot"
-					style={{opacity: '0'}}
+					id="preloader_background_container"
+					className={styles.background__container}
 				>
-					<span>.</span>
 				</div>
-					
-				<div className={styles.logo_text_vertical__wrapper}>
-					<span
-						className={styles.logo_text_vertical__text}
-						id="vertical_text"
-						style={{opacity: '0'}}
-					>
-						Studio
-					</span>
-				</div>
+
 			</div>
 
 			<div
-				className={styles['preloader__counter']}
-				id="preloader__counter"
-			>
+				className={styles.home_background}
+				id="home_background_container"
+				>
+				<Image
+					src={currentImage}
+					quality={100}
+				/>
 			</div>
-
-			{/* <div className="background-container">
-				<img src="" alt="" />
-			</div> */}
-		</div>
+		</>
 	)
 }
