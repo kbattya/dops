@@ -1,0 +1,45 @@
+$base-dark: #101820;
+$base-red: #E63E3A;
+
+.preloader {
+	width: 100vw;
+	height: 100vh;
+	background: $base-dark;
+	display: flex;
+	padding: 20px;
+
+	&__logo_full {
+		position: relative;
+		top: 0;
+		left: 0;
+		color: $base-red;
+		display: flex;
+		flex-direction: column;
+		padding: 20px;
+		font-size: 90px;
+	}
+
+	&__counter {
+		color: $base-red;
+		font-size: 230px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: normal;
+		margin-top: auto;
+		margin-left: auto;
+	}
+
+	.logo_text_vertical_dot {
+		position: absolute;
+		top: 50px;
+	}
+
+	.logo_text_vertical__wrapper {
+		position: absolute;
+		top: 130px;
+		left: 132px;
+		transform-origin: 0 0;
+		transform: rotate(90deg);
+		width: 500px;
+	}
+}
