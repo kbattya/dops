@@ -165,7 +165,50 @@ $base-red: #E63E3A;
 }
 
 
-.white {
-	width: 100%;
+.consistent_leads {
+	padding: 100px 20px;
 	height: 100vh;
+	background-color: white;
+	z-index: 100;
+	display: flex;
+	flex-direction: column;
+	gap: 58px;
+
+	h3 {
+		color: $base-dark;
+		font-size: 82px;
+		font-style: normal;
+		font-weight: 400;
+		line-height: 96%; 
+	}
+
+	p {
+		font-size: 22px;
+		font-style: normal;
+		font-weight: 300;
+		line-height: 120.5%;
+	}
+
+	.business_values_chart {
+		display: flex;
+		flex-direction: row;
+		gap: 1px;
+
+		&__candle {
+			display: flex;
+			flex-direction: column;
+			justify-content: flex-end;
+			width: 100%;
+			height: 50vh;
+			
+			div {
+				background-color: $base-red;
+			}
+
+			label {
+				text-align: center;
+				color: $base-red;
+			}
+		}
+	}
 }

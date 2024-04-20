@@ -13,6 +13,7 @@ gsap.registerPlugin(SplitText, ScrollTrigger)
 
 export default function Home() {
 const container = useRef();
+const business_values_chart = [27, 53, 62, 58, 30, 63, 55, 63, 71, 76, 67, 88, 78, 90]
 
 useGSAP(() => {
 	gsap.to("#home_background_container", {
@@ -34,6 +35,35 @@ useGSAP(() => {
 		}
   });
 
+	const split2 = new SplitText("#consistent_leads_header", { type: "chars" });
+  gsap.from(split2.chars, {
+    duration: 0.1,
+		delay: 0,
+    y: 0,
+    x: 0,
+    autoAlpha: 0,
+    ease: "power4.inOut",
+    stagger: 0.05,
+		scrollTrigger: {
+			trigger: "#consistent_leads",
+			start: "top center"
+		}
+  });
+
+	// gsap.to("#business_values_chart", {
+  //   duration: 0.3,
+  //   y: 100,
+	// 	scrollTrigger: {
+	// 		trigger: "#consistent_leads",
+	// 		start: "top center"
+	// 	},
+	// 	stagger: {
+	// 		each: 0.1,
+	// 		from: 3,
+	// 	}
+  // });
+
+
 	gsap.utils.toArray(["#home_background_container", "#growing_businesses"]).forEach((panel, i) => {
 		ScrollTrigger.create({
 			trigger: panel,
@@ -50,7 +80,7 @@ useGSAP(() => {
   return (
     <main className={styles.main} ref={container}>
 
-			<div id="home_background_container" className={styles.new_container}>
+			<section id="home_background_container" className={styles.new_container}>
 				<Preloader />
 				<div className={styles.preloader__logo_full}>
 					<div
@@ -82,12 +112,10 @@ useGSAP(() => {
 				<div className={styles.info_text}>
 					Digital Marketing <br />Agency
 				</div>
-
-			</div>
+			</section>
 			
 
-
-			<div className={styles.growing_businesses} id="growing_businesses">
+			<section className={styles.growing_businesses} id="growing_businesses">
 				<div
 					className={styles.growing_businesses__header}
 				>
@@ -128,10 +156,32 @@ useGSAP(() => {
 					</div>
 
 					</div>
-			</div>
+			</section>
 
-			<div className={styles.white} id="third">
-			</div>
+			<section className={styles.consistent_leads} id="consistent_leads">
+				<h3 id="consistent_leads_header">
+					Consitent leads flow to streamline <br />
+					Your business growth.
+				</h3>
+				<p>
+					We combine disruptive marketing techniques with proven <br />
+					tech solutions to provide maximum business value. 
+				</p>
+
+				<div className={styles.business_values_chart} id="business_values_chart">
+					{business_values_chart.map((candle, index) => {
+						return (
+							<div key={index} className={styles.business_values_chart__candle}>
+								<label htmlFor={`candle_${index}`}>{candle}</label>
+								<div style={{height: `${candle}%`}} id={`candle_${index}`}>
+								</div>
+							</div>
+						)
+					})}
+				</div>
+				
+			</section>
+
 			{/* <div id="panel">
 			
 
