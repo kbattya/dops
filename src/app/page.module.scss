@@ -82,6 +82,7 @@ $base-red: #E63E3A;
 
 	img {
 		height: 90vh;
+		// height: 869px;
 		width: auto;
 		background-size: contain;
     background-position: center;
@@ -91,8 +92,10 @@ $base-red: #E63E3A;
 
 .growing_businesses {
 	background-color: $base-red;
-	height: 100vh;
-	// opacity: 0;
+	height: 91vh;
+	min-height: fit-content;
+	transform: translate(0px, -10vh);
+	opacity: 0;
 	// transform: translate(0px, -10vh);
 
 	&__header {
@@ -138,6 +141,8 @@ $base-red: #E63E3A;
 		display: flex;
 		flex-direction: column;
 		padding: 20px;
+		height: 100%;
+		background-color: $base-red;
 
 		&__text_1 {
 			font-size: 135px;
@@ -146,10 +151,11 @@ $base-red: #E63E3A;
 			line-height: 96%;
 			letter-spacing: -4.05px;
 			margin-left: auto;
-			padding: 20px;
+			padding: 70px 20px;
 		}
 
 		&__text_2 {
+			margin-top: auto;
 			font-size: 22px;
 			font-style: normal;
 			font-weight: 400;

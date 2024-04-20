@@ -23,6 +23,10 @@ export default function Preloader ({}) {
 	
 	useEffect(() => {
 		var tl = gsap.timeline();
+		gsap.to("#growing_businesses", {
+			y: '0',
+		});
+
 		tl.to("#preloader__counter", {
 			duration: 0.5,
 			opacity: 1,
@@ -75,6 +79,10 @@ export default function Preloader ({}) {
 							duration: 2,
 							y: '-100%',
 							ease: "power4.inOut",
+						});
+
+						gsap.to("#growing_businesses", {
+							opacity: 1,
 						});
 
 						gsap.to("#growing_businesses", {

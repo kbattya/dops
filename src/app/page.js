@@ -1,10 +1,9 @@
 'use client';
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import styles from "./page.module.scss";  
 import { SplitText } from "gsap-trial/SplitText";
 import { ScrollTrigger } from "gsap-trial/ScrollTrigger";
 import Preloader from "./componetns/preloader/preloader";
-
 
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
@@ -20,33 +19,32 @@ useGSAP(() => {
 		y: 0,
 	});	
 
-	// gsap.to("#growing_businesses", {
-	// 	duration: 2,
-	// 	delay: 4,
-	// 	y: '-10vh',
-	// 	ease: "power4.inOut",
-	// });
-
-	// gsap.to("#growing_businesses", {
-	// 	y: '-10vh',
-	// 	scrollTrigger: {
-	// 		trigger: "#growing_businesses",
-	// 	}
-	// });	
+	const split = new SplitText("#growing_businesses_text", { type: "chars" });
+  gsap.from(split.chars, {
+    duration: 0.1,
+		delay: 0,
+    y: 0,
+    x: 0,
+    autoAlpha: 0,
+    ease: "power4.inOut",
+    stagger: 0.05,
+		scrollTrigger: {
+			trigger: "#growing_businesses",
+			start: "top center"
+		}
+  });
 
 	gsap.utils.toArray(["#home_background_container", "#growing_businesses"]).forEach((panel, i) => {
 		ScrollTrigger.create({
 			trigger: panel,
-			// start: "top top",
 			start: i === 0 ? "top top" : "-100 -1000",
 			end: i === 1 ? "bottom bottom" : "",
-			// end: i === 1 ? "-100 -100" : "bottom bottom",
-			// end: "-100 bottom",
 			pin: i === 2 ? false : true, 
 			pinSpacing: false,
 			markers: true,
 		});
 	});
+
 }, { scope: container,  revertOnUpdate: true}); 
 
   return (
@@ -121,7 +119,7 @@ useGSAP(() => {
 				</div>
 
 				<div className={styles.growing_businesses__content} id="growing_businesses__content">
-					<div className={styles.growing_businesses__content__text_1}>
+					<div className={styles.growing_businesses__content__text_1} id="growing_businesses_text">
 						Growing <br /> businesses by <br /> building <br /> relationships
 					</div>
 					<div className={styles.growing_businesses__content__text_2}>
