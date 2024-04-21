@@ -3,6 +3,8 @@ import React, { useEffect, useRef } from "react";
 import styles from "./page.module.scss";  
 import { SplitText } from "gsap-trial/SplitText";
 import { ScrollTrigger } from "gsap-trial/ScrollTrigger";
+import { Flip } from "gsap-trial/Flip";
+
 import Preloader from "./componetns/preloader/preloader";
 
 import { gsap } from "gsap";
@@ -10,136 +12,159 @@ import { useGSAP } from "@gsap/react";
 import { ArrowRight, Target1, Target2 } from "@/icons/icons";
 
 gsap.registerPlugin(useGSAP);
-gsap.registerPlugin(SplitText, ScrollTrigger) 
+gsap.registerPlugin(SplitText, ScrollTrigger, Flip) 
 
 export default function Home() {
-const container = useRef();
-const business_values_chart = [27, 53, 62, 58, 30, 63, 55, 63, 71, 76, 67, 88, 78, 90]
-const horizontal_progress = [
-	{label: "Revenue generated for clients", value: 1570, purpose: 1570},
-	{label: "Conversation opened", value: 1200, purpose: 2000},
-	{label: "Leads generated via target", value: 378, purpose: 378},
-	{label: "Calls scheduled for clients", value: 197, purpose: 400},
-]
-const tech_solutions = [
-	{ heading: 'B2B Marketing',
-		text: [
-			`Your solution is of high value and great quality, 
-			but you have a hard time attracting the right audience? 
-			Wish to work with specific clients but can't cut through 
-			the noise of a saturated market? Or simply looking to 
-			advance your growth efforts?`,
-			`That's the challenge for real B2B marketing pros. 
-			Having a perfect knowledge of the digital landscape, 
-			we will help you identify the lowest hanging fruits before 
-			you spend a fortune on marketing campaigns. While you make 
-			good use of the results, we work on a sustainable strategy 
-			to scale your business in the long run.`
-		],
-		targetUrl: '',
-		icon: <Target1 />
-	},
-	{ heading: 'LinkedIn Lead Generation',
-		text: [
-			`Your business is all set up and now feel ready to expand your client 
-			list? You understand your ideal client and how your product can 
-			solve their problems?`,
-			`That's when we come in with the comprehensive lead generation campaign to 
-			employ your sales team with more deals? Like experienced detectives, we will 
-			search for the prospects who drive the most value for your business. ext step? We 
-			make them talk to you. Unlike most salesy outreaches, our customized campaign is 
-			focused on building long-term relationships. Your sales team will love it.`
-		],
-		targetUrl: '',
-		icon: <Target2 />
-	}
-]
+	const container = useRef();
+	const business_values_chart = [27, 53, 62, 58, 30, 63, 55, 63, 71, 76, 67, 88, 78, 90]
+	const horizontal_progress = [
+		{label: "Revenue generated for clients", value: 1570, purpose: 1570},
+		{label: "Conversation opened", value: 1200, purpose: 2000},
+		{label: "Leads generated via target", value: 378, purpose: 378},
+		{label: "Calls scheduled for clients", value: 197, purpose: 400},
+	]
+	const tech_solutions = [
+		{ heading: 'B2B Marketing',
+			text: [
+				`Your solution is of high value and great quality, 
+				but you have a hard time attracting the right audience? 
+				Wish to work with specific clients but can't cut through 
+				the noise of a saturated market? Or simply looking to 
+				advance your growth efforts?`,
+				`That's the challenge for real B2B marketing pros. 
+				Having a perfect knowledge of the digital landscape, 
+				we will help you identify the lowest hanging fruits before 
+				you spend a fortune on marketing campaigns. While you make 
+				good use of the results, we work on a sustainable strategy 
+				to scale your business in the long run.`
+			],
+			targetUrl: '',
+			icon: <Target1 />
+		},
+		{ heading: 'LinkedIn Lead Generation',
+			text: [
+				`Your business is all set up and now feel ready to expand your client 
+				list? You understand your ideal client and how your product can 
+				solve their problems?`,
+				`That's when we come in with the comprehensive lead generation campaign to 
+				employ your sales team with more deals? Like experienced detectives, we will 
+				search for the prospects who drive the most value for your business. ext step? We 
+				make them talk to you. Unlike most salesy outreaches, our customized campaign is 
+				focused on building long-term relationships. Your sales team will love it.`
+			],
+			targetUrl: '',
+			icon: <Target2 />
+		}
+	]
 
-useGSAP(() => {
-	gsap.to("#home_background_container", {
-		y: 0,
-	});	
+	const container1 = useRef();
+  const tl = useRef();
 
-	gsap.utils.toArray(["#home_background_container", "#growing_businesses"]).forEach((panel, i) => {
-		ScrollTrigger.create({
-			trigger: panel,
-			start: i === 0 ? "top top" : "-100 -1000",
-			end: i === 1 ? "bottom bottom" : "",
-			pin: i === 2 ? false : true, 
-			pinSpacing: false,
-			markers: true,
+  const toggleTimeline = () => {
+    tl.current.reversed(!tl.current.reversed());
+  };
+
+  useGSAP(
+    () => {
+      const boxes = gsap.utils.toArray('.slider');
+			let el = boxes[0]
+			let q = gsap.utils.selector(el);
+
+      tl.current = gsap
+        .timeline()
+				.to(q(".animated_text"), { opacity: 0.2 })
+        .to(boxes[1], { x: '-60vw' }, '<')
+        .reverse();
+    },
+    { scope: container1 }
+  );
+
+	useGSAP(() => {
+		gsap.to("#home_background_container", {
+			y: 0,
+		});	
+
+		gsap.utils.toArray(["#home_background_container", "#growing_businesses"]).forEach((panel, i) => {
+			ScrollTrigger.create({
+				trigger: panel,
+				start: i === 0 ? "top top" : "-100 -1000",
+				end: i === 1 ? "bottom bottom" : "",
+				pin: i === 2 ? false : true, 
+				pinSpacing: false,
+				markers: true,
+			});
 		});
-	});
 
-	const split = new SplitText("#growing_businesses_text", { type: "chars" });
-  gsap.from(split.chars, {
-    duration: 0.1,
-		delay: 0,
-    y: 0,
-    x: 0,
-    autoAlpha: 0,
-    ease: "power4.inOut",
-    stagger: 0.05,
-		scrollTrigger: {
-			trigger: "#growing_businesses",
-			start: "top center"
-		}
-  });
+		const split = new SplitText("#growing_businesses_text", { type: "chars" });
+		gsap.from(split.chars, {
+			duration: 0.1,
+			delay: 0,
+			y: 0,
+			x: 0,
+			autoAlpha: 0,
+			ease: "power4.inOut",
+			stagger: 0.05,
+			scrollTrigger: {
+				trigger: "#growing_businesses",
+				start: "top center"
+			}
+		});
 
-	const split2 = new SplitText("#consistent_leads_header", { type: "chars" });
-  gsap.from(split2.chars, {
-    duration: 0.1,
-		delay: 0,
-    y: 0,
-    x: 0,
-    autoAlpha: 0,
-    ease: "power4.inOut",
-    stagger: 0.05,
-		scrollTrigger: {
-			trigger: "#consistent_leads",
-			start: "top center"
-		}
-  });
+		const split2 = new SplitText("#consistent_leads_header", { type: "chars" });
+		gsap.from(split2.chars, {
+			duration: 0.1,
+			delay: 0,
+			y: 0,
+			x: 0,
+			autoAlpha: 0,
+			ease: "power4.inOut",
+			stagger: 0.05,
+			scrollTrigger: {
+				trigger: "#consistent_leads",
+				start: "top center"
+			}
+		});
 
-	gsap.to(".candle", {
-    duration: 1,
-    yPercent: -100,
-		ease: "power4.out",
-		scrollTrigger: {
-			trigger: "#consistent_leads",
-			start: "top center"
-		},
-		stagger: {
-			each: 0.1,
-		}
-  });
+		gsap.to(".candle", {
+			duration: 1,
+			yPercent: -100,
+			ease: "power4.out",
+			scrollTrigger: {
+				trigger: "#consistent_leads",
+				start: "top center"
+			},
+			stagger: {
+				each: 0.1,
+			}
+		});
 
-	gsap.to(".progress__item_animated", {
-    duration: 1,
-    xPercent: 100,
-		ease: "power2.out",
-		scrollTrigger: {
-			trigger: "#consistent_leads_header",
-			toggleActions: 'restart none none none',
-			start: "top top"
-		},
-		stagger: {
-			each: 0.3,
-		}
-  });
+		gsap.to(".progress__item_animated", {
+			duration: 1,
+			xPercent: 100,
+			ease: "power2.out",
+			scrollTrigger: {
+				trigger: "#consistent_leads_header",
+				toggleActions: 'restart none none none',
+				start: "top top"
+			},
+			stagger: {
+				each: 0.3,
+			}
+		});
 
-	gsap.to(".progress__item_text", {
-    duration: 1,
-		delay: 0.1,
-		opacity: 1,
-		scrollTrigger: {
-			trigger: "#consistent_leads_header",
-			toggleActions: 'restart none none none',
-			start: "top top"
-		},
-  });
+		gsap.to(".progress__item_text", {
+			duration: 1,
+			delay: 0.1,
+			opacity: 1,
+			scrollTrigger: {
+				trigger: "#consistent_leads_header",
+				toggleActions: 'restart none none none',
+				start: "top top"
+			},
+		});
 
-}, { scope: container,  revertOnUpdate: true}); 
+	}, { scope: container,  revertOnUpdate: true});
+
 
 
 
@@ -289,24 +314,28 @@ useGSAP(() => {
 				<div className={styles.trusted_partner__content}>
 					<p className={styles.trusted_partner__description}>We combine disruptive marketing techniques with proven tech solutions to provide maximum business value.</p>
 
-					<div className={styles.sliders_container}>
+					<div className={styles.sliders_container} ref={container1}>
 						{tech_solutions.map((solution, index) => {
 							return (
-								<div key={index} className={styles.slider}>
-									<p className={styles.slider__number}>
+								<div
+									key={index}
+									className={styles.slider+" slider"}
+									onClick={()=> toggleTimeline()}
+								>
+									<p className={styles.slider__number+" animated_text"}>
 										{index + 1}
 									</p>
-									<h3 className={styles.slider__heading}>
+									<h3 className={styles.slider__heading+" animated_text"}>
 										{solution.heading}
 									</h3>
 
-									<div className={styles.slider__body}>
+									<div className={styles.slider__body+" animated_text"}>
 										{solution.text.map((pr, i) => {
 											return <p key={i}>{pr}</p>
 										})}
 									</div>
 									
-									<div className={styles.slider__footer}>
+									<div className={styles.slider__footer+" animated_text"}>
 										{solution.icon}
 
 										<button className={styles.btn_primary}>
@@ -321,18 +350,7 @@ useGSAP(() => {
 						})}
 					</div>
 				</div>
-
-				
 			</section>
-
-			{/* <div id="panel">
-			
-
-				<div className={styles.white}>
-				</div>
-
-			</div> */}
-			
 
 			
     </main>

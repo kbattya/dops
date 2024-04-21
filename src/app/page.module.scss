@@ -392,6 +392,11 @@ $base-red: #E63E3A;
 			p, h3 {
 				color: #5D646B;
 			}
+
+			.btn_primary {
+				background-color: $base-red;
+				color: white;
+			}
 		}
 
 	}
