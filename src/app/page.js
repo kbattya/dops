@@ -1,5 +1,5 @@
 'use client';
-import React, { useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import styles from "./page.module.scss";  
 import { SplitText } from "gsap-trial/SplitText";
 import { ScrollTrigger } from "gsap-trial/ScrollTrigger";
@@ -14,11 +14,28 @@ gsap.registerPlugin(SplitText, ScrollTrigger)
 export default function Home() {
 const container = useRef();
 const business_values_chart = [27, 53, 62, 58, 30, 63, 55, 63, 71, 76, 67, 88, 78, 90]
+const horizontal_progress = [
+	{label: "Revenue generated for clients", value: 1570, purpose: 1570},
+	{label: "Conversation opened", value: 1200, purpose: 2000},
+	{label: "Leads generated via target", value: 378, purpose: 378},
+	{label: "Calls scheduled for clients", value: 197, purpose: 400},
+]
 
 useGSAP(() => {
 	gsap.to("#home_background_container", {
 		y: 0,
 	});	
+
+	gsap.utils.toArray(["#home_background_container", "#growing_businesses"]).forEach((panel, i) => {
+		ScrollTrigger.create({
+			trigger: panel,
+			start: i === 0 ? "top top" : "-100 -1000",
+			end: i === 1 ? "bottom bottom" : "",
+			pin: i === 2 ? false : true, 
+			pinSpacing: false,
+			markers: true,
+		});
+	});
 
 	const split = new SplitText("#growing_businesses_text", { type: "chars" });
   gsap.from(split.chars, {
@@ -50,32 +67,47 @@ useGSAP(() => {
 		}
   });
 
-	// gsap.to("#business_values_chart", {
-  //   duration: 0.3,
-  //   y: 100,
-	// 	scrollTrigger: {
-	// 		trigger: "#consistent_leads",
-	// 		start: "top center"
-	// 	},
-	// 	stagger: {
-	// 		each: 0.1,
-	// 		from: 3,
-	// 	}
-  // });
+	gsap.to(".candle", {
+    duration: 1,
+    yPercent: -100,
+		ease: "power4.out",
+		scrollTrigger: {
+			trigger: "#consistent_leads",
+			start: "top center"
+		},
+		stagger: {
+			each: 0.1,
+		}
+  });
 
+	gsap.to(".progress__item_animated", {
+    duration: 1,
+    xPercent: 100,
+		ease: "power2.out",
+		scrollTrigger: {
+			trigger: "#consistent_leads_header",
+			toggleActions: 'restart none none none',
+			start: "top top"
+		},
+		stagger: {
+			each: 0.3,
+		}
+  });
 
-	gsap.utils.toArray(["#home_background_container", "#growing_businesses"]).forEach((panel, i) => {
-		ScrollTrigger.create({
-			trigger: panel,
-			start: i === 0 ? "top top" : "-100 -1000",
-			end: i === 1 ? "bottom bottom" : "",
-			pin: i === 2 ? false : true, 
-			pinSpacing: false,
-			markers: true,
-		});
-	});
+	gsap.to(".progress__item_text", {
+    duration: 1,
+		delay: 0.1,
+		opacity: 1,
+		scrollTrigger: {
+			trigger: "#consistent_leads_header",
+			toggleActions: 'restart none none none',
+			start: "top top"
+		},
+  });
 
 }, { scope: container,  revertOnUpdate: true}); 
+
+
 
   return (
     <main className={styles.main} ref={container}>
@@ -168,18 +200,51 @@ useGSAP(() => {
 					tech solutions to provide maximum business value. 
 				</p>
 
-				<div className={styles.business_values_chart} id="business_values_chart">
-					{business_values_chart.map((candle, index) => {
-						return (
-							<div key={index} className={styles.business_values_chart__candle}>
-								<label htmlFor={`candle_${index}`}>{candle}</label>
-								<div style={{height: `${candle}%`}} id={`candle_${index}`}>
+				<div className={styles.business_values_chart__wrapper}>
+					<div className={styles.business_values_chart} id="business_values_chart">
+						{business_values_chart.map((candle, index) => {
+							return (
+								<div key={index} className={styles.business_values_chart__candle+' candle'}>
+									<label htmlFor={`candle_${index}`}>{candle}</label>
+									<div style={{height: `${candle}%`}} id={`candle_${index}`}>
+									</div>
 								</div>
+							)
+						})}
+					</div>
+				</div>
+			
+
+				<div className={styles.horizontal_progress} id="horizontal_progress">
+					{horizontal_progress.map((item, index) => {
+						return (
+							<div
+								key={index}
+								className={styles.horizontal_progress__item_container}
+							>
+								<div
+									style={{width: `${item.value/item.purpose*100}%`}}
+									className={styles.horizontal_progress__item}
+									id={`progress__item${index}`}
+								>
+									<label htmlFor={`progress__item${index}`} className="progress__item_text">{item.label}</label>
+									<div className={styles.value+" progress__item_text"} >{item.value}</div>
+								</div>
+
+								<div
+									className={styles.progress__item_animated_wrapper}
+									style={{width: `${item.value/item.purpose*100}%`}}
+								>
+									<div
+										className={styles.progress__item_animated+" progress__item_animated"}
+										id={`progress__item${index}`}
+									></div>
+								</div>
+								
 							</div>
 						)
 					})}
 				</div>
-				
 			</section>
 
 			{/* <div id="panel">
