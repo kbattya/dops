@@ -23,9 +23,6 @@ export default function Preloader ({}) {
 	
 	useEffect(() => {
 		var tl = gsap.timeline();
-		gsap.to("#growing_businesses", {
-			y: '0',
-		});
 
 		tl.to("#preloader__counter", {
 			duration: 0.5,
@@ -85,34 +82,17 @@ export default function Preloader ({}) {
 						});
 
 						gsap.to("#growing_businesses", {
-							opacity: 1,
-						});
-
-						gsap.to("#growing_businesses", {
 							duration: 2,
 							delay: 0,
-							y: '-10vh',
+							y: '-100px',
 							ease: "power4.inOut",
 						});
-						// gsap.set("#growing_businesses", { autoAlpha: 1 });
-
 						gsap.to("#home_background", {
 							duration: 2,
 							delay: 0,
-							y: '0px',
+							y: '-95px',
 							ease: "power4.inOut",
-							onComplete: () => {
-								// changeImages()
-							}
 						});
-
-
-						// gsap.to("#growing_businesses", {
-						// 	duration: 2,
-						// 	delay: 0,
-						// 	y: -200,
-						// })
-
 					}
 				});	
       }

@@ -73,16 +73,13 @@ export default function Home() {
       tl.current = gsap
         .timeline()
 				.to(q(".animated_text"), { opacity: 0.2 })
-        .to(boxes[1], { x: '-60vw' }, '<')
+        .to(boxes[1], { x: '-62vw' }, '<')
         .reverse();
     },
     { scope: container1 }
   );
 
 	useGSAP(() => {
-		gsap.to("#home_background_container", {
-			y: 0,
-		});	
 
 		gsap.utils.toArray(["#home_background_container", "#growing_businesses"]).forEach((panel, i) => {
 			ScrollTrigger.create({
@@ -91,7 +88,9 @@ export default function Home() {
 				end: i === 1 ? "bottom bottom" : "",
 				pin: i === 2 ? false : true, 
 				pinSpacing: false,
-				markers: true,
+				onUpdate: () => i === 1 && gsap.set("#growing_businesses", {
+					y: '-100px',
+				}) 
 			});
 		});		
 
