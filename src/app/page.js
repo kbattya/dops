@@ -7,6 +7,7 @@ import Preloader from "./componetns/preloader/preloader";
 
 import { gsap } from "gsap";
 import { useGSAP } from "@gsap/react";
+import { ArrowRight, Target1, Target2 } from "@/icons/icons";
 
 gsap.registerPlugin(useGSAP);
 gsap.registerPlugin(SplitText, ScrollTrigger) 
@@ -19,6 +20,39 @@ const horizontal_progress = [
 	{label: "Conversation opened", value: 1200, purpose: 2000},
 	{label: "Leads generated via target", value: 378, purpose: 378},
 	{label: "Calls scheduled for clients", value: 197, purpose: 400},
+]
+const tech_solutions = [
+	{ heading: 'B2B Marketing',
+		text: [
+			`Your solution is of high value and great quality, 
+			but you have a hard time attracting the right audience? 
+			Wish to work with specific clients but can't cut through 
+			the noise of a saturated market? Or simply looking to 
+			advance your growth efforts?`,
+			`That's the challenge for real B2B marketing pros. 
+			Having a perfect knowledge of the digital landscape, 
+			we will help you identify the lowest hanging fruits before 
+			you spend a fortune on marketing campaigns. While you make 
+			good use of the results, we work on a sustainable strategy 
+			to scale your business in the long run.`
+		],
+		targetUrl: '',
+		icon: <Target1 />
+	},
+	{ heading: 'LinkedIn Lead Generation',
+		text: [
+			`Your business is all set up and now feel ready to expand your client 
+			list? You understand your ideal client and how your product can 
+			solve their problems?`,
+			`That's when we come in with the comprehensive lead generation campaign to 
+			employ your sales team with more deals? Like experienced detectives, we will 
+			search for the prospects who drive the most value for your business. ext step? We 
+			make them talk to you. Unlike most salesy outreaches, our customized campaign is 
+			focused on building long-term relationships. Your sales team will love it.`
+		],
+		targetUrl: '',
+		icon: <Target2 />
+	}
 ]
 
 useGSAP(() => {
@@ -168,10 +202,8 @@ useGSAP(() => {
 					<div>
 						<a>We're hiring</a>
 						<a>Contacts</a>
-						<button>
-							<svg xmlns="http://www.w3.org/2000/svg" width="22" height="13" viewBox="0 0 22 13" fill="none">
-							<path d="M21.1007 6.49956L15.3873 0.786133H12.5306L17.2399 5.49546L0.899353 5.48769L0.900767 7.51284L17.2498 7.51355L12.5306 12.213L15.3866 12.2137L21.1007 6.49956Z" fill="#E63E3A"/>
-							</svg>
+						<button className={styles.btn_primary}>
+							<ArrowRight />
 
 							<span>Book a call</span>
 						</button>
@@ -214,7 +246,6 @@ useGSAP(() => {
 					</div>
 				</div>
 			
-
 				<div className={styles.horizontal_progress} id="horizontal_progress">
 					{horizontal_progress.map((item, index) => {
 						return (
@@ -245,6 +276,53 @@ useGSAP(() => {
 						)
 					})}
 				</div>
+			</section>
+
+			<section className={styles.trusted_partner} id="trusted_partner">
+				<div className={styles.trusted_partner__heading}>
+					<hr />
+						<h2>Trusted long-term partner</h2>
+						<p>For leading B2B tech and <br /> service companies</p>
+					<hr />
+				</div>
+
+				<div className={styles.trusted_partner__content}>
+					<p className={styles.trusted_partner__description}>We combine disruptive marketing techniques with proven tech solutions to provide maximum business value.</p>
+
+					<div className={styles.sliders_container}>
+						{tech_solutions.map((solution, index) => {
+							return (
+								<div key={index} className={styles.slider}>
+									<p className={styles.slider__number}>
+										{index + 1}
+									</p>
+									<h3 className={styles.slider__heading}>
+										{solution.heading}
+									</h3>
+
+									<div className={styles.slider__body}>
+										{solution.text.map((pr, i) => {
+											return <p key={i}>{pr}</p>
+										})}
+									</div>
+									
+									<div className={styles.slider__footer}>
+										{solution.icon}
+
+										<button className={styles.btn_primary}>
+											<ArrowRight />
+
+											Learn more
+										</button>
+									</div>
+									
+								</div>
+							)
+						})}
+					</div>
+				</div>
+
+				
 			</section>
 
 			{/* <div id="panel">
