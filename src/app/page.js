@@ -93,7 +93,7 @@ export default function Home() {
 				pinSpacing: false,
 				markers: true,
 			});
-		});
+		});		
 
 		const split = new SplitText("#growing_businesses_text", { type: "chars" });
 		gsap.from(split.chars, {
@@ -163,6 +163,47 @@ export default function Home() {
 			},
 		});
 
+		const split3 = new SplitText(".trusted_partner_heading", { type: "chars" });
+		gsap.from(split3.chars, {
+			duration: 0.1,
+			delay: 0,
+			y: 0,
+			x: 0,
+			autoAlpha: 0,
+			ease: "power4.inOut",
+			stagger: 0.05,
+			scrollTrigger: {
+				trigger: "#trusted_partner",
+				toggleActions: 'restart none none none',
+				start: "top center"
+			}
+		});
+
+		gsap.to(".sepatator", {
+			duration: 1,
+			delay: 0.1,
+			xPercent: 100,
+			opacity: 1,
+			scrollTrigger: {
+				trigger: "#trusted_partner",
+				toggleActions: 'restart none none none',
+				start: "top bottom"
+			},
+			stagger: {
+				each: 0.3,
+			}
+		});
+
+		gsap.to(".trusted_partner_text--anim-simple", {
+			duration: 1,
+			opacity: 1,
+			ease: "power2.out",
+			scrollTrigger: {
+				trigger: "#trusted_partner",
+				toggleActions: 'restart none none none',
+				start: "top center"
+			},
+		});
 	}, { scope: container,  revertOnUpdate: true});
 
 
@@ -305,14 +346,14 @@ export default function Home() {
 
 			<section className={styles.trusted_partner} id="trusted_partner">
 				<div className={styles.trusted_partner__heading}>
-					<hr />
-						<h2>Trusted long-term partner</h2>
-						<p>For leading B2B tech and <br /> service companies</p>
-					<hr />
+					<hr className="sepatator" />
+						<h2><div className="trusted_partner_heading">Trusted long-term partner</div></h2>
+						<p className="trusted_partner_text--anim-simple">For leading B2B tech and <br /> service companies</p>
+					<hr className="sepatator" />
 				</div>
 
 				<div className={styles.trusted_partner__content}>
-					<p className={styles.trusted_partner__description}>We combine disruptive marketing techniques with proven tech solutions to provide maximum business value.</p>
+					<p className={styles.trusted_partner__description+" trusted_partner_text--anim-simple"}>We combine disruptive marketing techniques with proven tech solutions to provide maximum business value.</p>
 
 					<div className={styles.sliders_container} ref={container1}>
 						{tech_solutions.map((solution, index) => {
