@@ -54,9 +54,12 @@ export default function Preloader ({}) {
 				gsap.set("#vertical_text", { autoAlpha: 1 });
 
         const split = new SplitText("#horizontal_text", { type: "chars" });
+				function customDelay(index) {
+					return index === 0 ? 0 : 0.2;
+				}
         gsap.from(split.chars, {
           duration: 0.1,
-      		delay: 0,
+      		delay: customDelay,
           y: 0,
           x: 0,
           autoAlpha: 0,
@@ -68,7 +71,7 @@ export default function Preloader ({}) {
 
 				gsap.from(split2.chars, {
 					duration: 0.1,
-					delay: 0,
+					delay: customDelay,
 					y: 0, 
 					x: 0,
 					autoAlpha: 0, 
