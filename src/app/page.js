@@ -64,23 +64,19 @@ export default function Home() {
     tl.current.reversed(!tl.current.reversed());
   };
 
-  useGSAP(
-    () => {
-      const boxes = gsap.utils.toArray('.slider');
-			let el = boxes[0]
-			let q = gsap.utils.selector(el);
+  useGSAP(() => {
+    const boxes = gsap.utils.toArray('.slider');
+		let el = boxes[0]
+		let q = gsap.utils.selector(el);
 
-      tl.current = gsap
-        .timeline()
-				.to(q(".animated_text"), { opacity: 0.2 })
-        .to(boxes[1], { x: '-62vw' }, '<')
-        .reverse();
-    },
-    { scope: container1 }
-  );
+    tl.current = gsap
+      .timeline()
+			.to(q(".animated_text"), { opacity: 0.2 })
+      .to(boxes[1], { x: '-62vw' }, '<')
+      .reverse();
+  }, { scope: container1 });
 
 	useGSAP(() => {
-
 		gsap.utils.toArray(["#home_background_container", "#growing_businesses"]).forEach((panel, i) => {
 			ScrollTrigger.create({
 				trigger: panel,
@@ -89,7 +85,7 @@ export default function Home() {
 				pin: i === 2 ? false : true, 
 				pinSpacing: false,
 				onUpdate: () => i === 1 && gsap.set("#growing_businesses", {
-					y: '-100px',
+					y: '-90px',
 				}) 
 			});
 		});		
@@ -206,25 +202,20 @@ export default function Home() {
 	}, { scope: container,  revertOnUpdate: true});
 
 
-
-
   return (
     <main className={styles.main} ref={container}>
-
 			<section id="home_background_container" className={styles.new_container}>
 				<Preloader />
 				<div className={styles.preloader__logo_full}>
 					<div
 						className={styles.logo_text_horizontal}
 						id="horizontal_text"
-						style={{opacity: '0'}}
 					>
 						Respect
 					</div>
 					<div
 						className={styles.logo_text_vertical_dot}
 						id="logo_text_vertical_dot"
-						style={{opacity: '0'}}
 					>
 						<span>.</span>
 					</div>
@@ -233,21 +224,19 @@ export default function Home() {
 						<span
 							className={styles.logo_text_vertical__text}
 							id="vertical_text"
-							style={{opacity: '0'}}
 						>
 							Studio
 						</span>
 					</div>
 				</div>
 
-				<div className={styles.info_text}>
+				<h1 className={styles.info_text}>
 					Digital Marketing <br />Agency
-				</div>
+				</h1>
 			</section>
-			
 
 			<section className={styles.growing_businesses} id="growing_businesses">
-				<div
+				<header
 					className={styles.growing_businesses__header}
 				>
 					<div>
@@ -273,12 +262,12 @@ export default function Home() {
 							<span>Book a call</span>
 						</button>
 					</div>
-				</div>
+				</header>
 
 				<div className={styles.growing_businesses__content} id="growing_businesses__content">
-					<div className={styles.growing_businesses__content__text_1} id="growing_businesses_text">
+					<h2 className={styles.growing_businesses__content__text_1} id="growing_businesses_text">
 						Growing <br /> businesses by <br /> building <br /> relationships
-					</div>
+					</h2>
 					<div className={styles.growing_businesses__content__text_2}>
 						B2B Marketing & LinkedIn Lead <br />
 						Generation agency
@@ -288,10 +277,10 @@ export default function Home() {
 			</section>
 
 			<section className={styles.consistent_leads} id="consistent_leads">
-				<h3 id="consistent_leads_header">
+				<h2 id="consistent_leads_header">
 					Consitent leads flow to streamline <br />
 					Your business growth.
-				</h3>
+				</h2>
 				<p>
 					We combine disruptive marketing techniques with proven <br />
 					tech solutions to provide maximum business value. 
@@ -347,7 +336,7 @@ export default function Home() {
 				<div className={styles.trusted_partner__heading}>
 					<hr className="sepatator" />
 						<h2><div className="trusted_partner_heading">Trusted long-term partner</div></h2>
-						<p className="trusted_partner_text--anim-simple">For leading B2B tech and <br /> service companies</p>
+						<h4 className="trusted_partner_text--anim-simple">For leading B2B tech and <br /> service companies</h4>
 					<hr className="sepatator" />
 				</div>
 
@@ -391,8 +380,6 @@ export default function Home() {
 					</div>
 				</div>
 			</section>
-
-			
     </main>
   );
 }

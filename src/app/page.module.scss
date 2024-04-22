@@ -63,6 +63,12 @@ $base-red: #E63E3A;
 	top: 30px;
 }
 
+.logo_text_vertical_dot,
+.logo_text_horizontal, 
+.logo_text_vertical__text {
+	opacity: 0;
+}
+
 .logo_text_vertical__wrapper {
 	position: absolute;
 	top: 110px;
@@ -89,8 +95,11 @@ $base-red: #E63E3A;
 
 
 .home_background {
-	transform: translate(0px, 300px);
+	display: flex;
+  justify-content: center;
+
 	img {
+		padding-top: 85px;
 		height: 100vh;
 		width: auto;
 		background-size: contain;
@@ -100,7 +109,7 @@ $base-red: #E63E3A;
 
 .growing_businesses {
 	background-color: $base-red;
-	height: 100vh;
+	height: calc(100vh - 85px);
 	min-height: fit-content;
 
 	&__header {
@@ -169,7 +178,7 @@ $base-red: #E63E3A;
 	gap: 8px;
 	overflow: hidden;
 
-	h3 {
+	h2 {
 		color: $base-dark;
 		font-size: 82px;
 		font-style: normal;
@@ -199,7 +208,7 @@ $base-red: #E63E3A;
 			flex-direction: column;
 			justify-content: flex-end;
 			width: 100%;
-			height: 70vh;
+			height: calc(100vh - 440px);
 			
 			div {
 				background-color: $base-red;
@@ -305,7 +314,7 @@ $base-red: #E63E3A;
 			line-height: 96%;
 		}
 
-		p {
+		h4 {
 			color: $base-red;
 			font-size: 38px;
 			font-style: normal;
