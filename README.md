@@ -10,4 +10,4 @@
 	npm run dev
 
 
-will started http://localhost:3000
+will be started http://localhost:3000
