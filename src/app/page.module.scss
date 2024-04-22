@@ -164,6 +164,7 @@ $base-red: #E63E3A;
 			font-style: normal;
 			font-weight: 400;
 			line-height: 120.5%;
+			opacity: 0;
 		}
 	}
 }
@@ -177,6 +178,7 @@ $base-red: #E63E3A;
 	flex-direction: column;
 	gap: 8px;
 	overflow: hidden;
+	position: relative;
 
 	h2 {
 		color: $base-dark;
@@ -184,6 +186,12 @@ $base-red: #E63E3A;
 		font-style: normal;
 		font-weight: 400;
 		line-height: 96%; 
+	}
+
+	&__descr {
+		position: absolute;
+		top: 250px;
+		opacity: 0;
 	}
 
 	p {
@@ -208,7 +216,7 @@ $base-red: #E63E3A;
 			flex-direction: column;
 			justify-content: flex-end;
 			width: 100%;
-			height: calc(100vh - 440px);
+			height: calc(100vh - 240px);
 			
 			div {
 				background-color: $base-red;
